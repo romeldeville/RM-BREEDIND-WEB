@@ -1,0 +1,188 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <h1>{{ 'settings.title' | t }}</h1>
+    </div>
+  </header>
+
+  <div class="settings-grid">
+    <!-- Profil utilisateur -->
+    <article class="card settings-card">
+      <h2>Mon profil & Informations</h2>
+      <p class="muted">Consultez et modifiez vos informations personnelles.</p>
+
+      @if (profileSuccess()) {
+        <div class="alert alert--success">{{ profileSuccess() }}</div>
+      }
+      @if (profileError()) {
+        <div class="alert alert--danger">{{ profileError() }}</div>
+      }
+
+      <form class="settings-form" (ngSubmit)="saveProfile()">
+        <div class="field">
+          <label for="profile-email">Adresse e-mail</label>
+          <input
+            id="profile-email"
+            type="email"
+            [value]="auth.user()?.email ?? ''"
+            disabled
+            class="input-disabled"
+          />
+          <small class="field-hint">L’adresse e-mail est liée à votre compte et ne peut être modifiée directement.</small>
+        </div>
+
+        <div class="field">
+          <label for="profile-name">Nom complet *</label>
+          <input
+            id="profile-name"
+            type="text"
+            [ngModel]="fullName()"
+            (ngModelChange)="fullName.set($event)"
+            name="fullName"
+            placeholder="Ex: Jean Dupont"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="profile-phone">Numéro de téléphone</label>
+          <input
+            id="profile-phone"
+            type="tel"
+            [ngModel]="phone()"
+            (ngModelChange)="phone.set($event)"
+            name="phone"
+            placeholder="Ex: +229 97 00 00 00"
+          />
+        </div>
+
+        <div class="field">
+          <label>Langue préférée</label>
+          <div class="segmented">
+            <button
+              type="button"
+              [class.active]="locale() === 'fr'"
+              (click)="setLocale('fr')"
+            >
+              Français
+            </button>
+            <button
+              type="button"
+              [class.active]="locale() === 'en'"
+              (click)="setLocale('en')"
+            >
+              English
+            </button>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary" [disabled]="profileSaving()">
+            {{ profileSaving() ? 'Enregistrement…' : 'Enregistrer les modifications' }}
+          </button>
+        </div>
+      </form>
+    </article>
+
+    <!-- Sécurité / Mot de passe -->
+    <article class="card settings-card">
+      <h2>Sécurité & Mot de passe</h2>
+      <p class="muted">Modifiez votre mot de passe pour sécuriser votre compte.</p>
+
+      @if (passwordSuccess()) {
+        <div class="alert alert--success">{{ passwordSuccess() }}</div>
+      }
+      @if (passwordError()) {
+        <div class="alert alert--danger">{{ passwordError() }}</div>
+      }
+
+      <form class="settings-form" (ngSubmit)="changePassword()">
+        <div class="field">
+          <label for="pwd-current">Mot de passe actuel</label>
+          <input
+            id="pwd-current"
+            type="password"
+            [ngModel]="currentPassword()"
+            (ngModelChange)="currentPassword.set($event)"
+            name="currentPassword"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="pwd-new">Nouveau mot de passe</label>
+          <input
+            id="pwd-new"
+            type="password"
+            [ngModel]="newPassword()"
+            (ngModelChange)="newPassword.set($event)"
+            name="newPassword"
+            autocomplete="new-password"
+            minlength="12"
+            required
+          />
+          <small class="field-hint">Minimum 12 caractères.</small>
+        </div>
+
+        <div class="field">
+          <label for="pwd-confirm">Confirmer le nouveau mot de passe</label>
+          <input
+            id="pwd-confirm"
+            type="password"
+            [ngModel]="confirmPassword()"
+            (ngModelChange)="confirmPassword.set($event)"
+            name="confirmPassword"
+            autocomplete="new-password"
+            minlength="12"
+            required
+          />
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary" [disabled]="passwordSaving()">
+            {{ passwordSaving() ? 'Modification…' : 'Changer de mot de passe' }}
+          </button>
+        </div>
+      </form>
+    </article>
+
+    <!-- Exploitation active -->
+    <article class="card settings-card">
+      <h2>{{ 'settings.tenant' | t }}</h2>
+      <dl class="facts">
+        <div>
+          <dt>Nom</dt>
+          <dd>{{ auth.tenant()?.name ?? '—' }}</dd>
+        </div>
+        <div>
+          <dt>Identifiant</dt>
+          <dd>{{ auth.tenant()?.slug ?? '—' }}</dd>
+        </div>
+        <div>
+          <dt>Offre</dt>
+          <dd>{{ auth.tenant()?.planCode ?? '—' }}</dd>
+        </div>
+        <div>
+          <dt>Vos rôles</dt>
+          <dd>{{ auth.roles().join(', ') }}</dd>
+        </div>
+      </dl>
+    </article>
+
+    <!-- Équipe -->
+    <article class="card settings-card">
+      <h2>{{ 'settings.members' | t }}</h2>
+      <p class="muted">{{ 'settings.membersDesc' | t }}</p>
+      <a class="btn btn--primary" href="/app/settings/members">{{ 'settings.membersLink' | t }}</a>
+    </article>
+
+    <!-- Thème & Affichage -->
+    <article class="card settings-card">
+      <h2>{{ 'settings.theme' | t }}</h2>
+      <p class="muted">
+        Le thème clair est actif avec typographie haute lisibilité optimisée pour le terrain.
+      </p>
+    </article>
+  </div>
+</section>

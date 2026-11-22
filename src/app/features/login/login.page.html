@@ -1,0 +1,60 @@
+<div class="login">
+  <aside class="login__brand">
+    <span class="login__mark">RM</span>
+    <h1>{{ 'app.name' | t }}</h1>
+    <p>{{ 'app.tagline' | t }}</p>
+    <ul class="login__features">
+      <li>Cheptel, reproduction et santé</li>
+      <li>Production, ventes et finances</li>
+      <li>Alertes et pilotage en temps réel</li>
+      <li>Web et mobile, même expérience</li>
+    </ul>
+  </aside>
+
+  <main class="login__panel">
+    <div class="login__lang">
+      <button type="button" class="chip" (click)="toggleLanguage()">
+        {{ i18n.locale() === 'fr' ? 'EN' : 'FR' }}
+      </button>
+    </div>
+
+    <form class="card login__form" [formGroup]="form" (ngSubmit)="submit()">
+      <header>
+        <h2>{{ 'auth.login.title' | t }}</h2>
+        <p>{{ 'auth.login.subtitle' | t }}</p>
+      </header>
+
+      @if (error()) {
+        <div class="form-error" role="alert">{{ error() }}</div>
+      }
+
+      <label class="field">
+        <span>{{ 'auth.login.email' | t }}</span>
+        <input type="email" formControlName="email" autocomplete="username" />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <small class="field__error">E-mail invalide</small>
+        }
+      </label>
+
+      <label class="field">
+        <span>{{ 'auth.login.password' | t }}</span>
+        <input type="password" formControlName="password" autocomplete="current-password" />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <small class="field__error">8 caractères minimum</small>
+        }
+      </label>
+
+      <button type="submit" class="btn btn--primary" [disabled]="submitting()">
+        {{ submitting() ? ('common.loading' | t) : ('auth.login.submit' | t) }}
+      </button>
+
+      <a class="login__link" routerLink="/login/otp">{{ 'auth.login.useCode' | t }}</a>
+
+      @if (demoMode) {
+        <button type="button" class="btn btn--ghost" (click)="enterDemo()">
+          {{ 'auth.login.demo' | t }}
+        </button>
+      }
+    </form>
+  </main>
+</div>

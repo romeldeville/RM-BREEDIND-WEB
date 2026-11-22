@@ -1,0 +1,84 @@
+<div class="shell" [class.shell--sidebar-open]="store.sidebarOpen()">
+  <aside class="sidebar" aria-label="Navigation principale">
+    <div class="brand">
+      <span class="brand__mark">RM</span>
+      <div class="brand__text">
+        <strong>{{ 'app.name' | t }}</strong>
+        <small>{{ 'app.tagline' | t }}</small>
+      </div>
+    </div>
+
+    <nav class="nav">
+      @for (section of sections; track section.labelKey) {
+        <div class="nav__section">
+          <span class="nav__section-label">{{ section.labelKey | t }}</span>
+          @for (item of section.items; track item.route) {
+            <a
+              class="nav__item"
+              [routerLink]="item.route"
+              routerLinkActive="nav__item--active"
+              (click)="store.closeSidebar()"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path [attr.d]="item.path" />
+              </svg>
+              <span>{{ item.labelKey | t }}</span>
+            </a>
+          }
+        </div>
+      }
+    </nav>
+
+    <div class="sidebar__footer">
+      <span class="status-dot" [class.status-dot--offline]="!store.online()"></span>
+      {{ (store.online() ? 'common.online' : 'common.offline') | t }}
+    </div>
+  </aside>
+
+  <div class="shell__backdrop" (click)="store.closeSidebar()" aria-hidden="true"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button
+        type="button"
+        class="icon-button"
+        aria-label="Menu"
+        (click)="store.toggleSidebar()"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <div class="topbar__tenant">
+        <span class="topbar__label">{{ 'common.tenant' | t }}</span>
+        <strong>{{ auth.tenant()?.name ?? '—' }}</strong>
+      </div>
+
+      <div class="topbar__actions">
+        <button type="button" class="chip" (click)="toggleLanguage()">
+          {{ i18n.locale() === 'fr' ? 'EN' : 'FR' }}
+        </button>
+
+        <div class="user">
+          <span class="user__avatar">
+            {{ auth.initials() }}
+          </span>
+          <div class="user__meta">
+            <strong>{{ auth.displayName() }}</strong>
+            <small>{{ auth.user()?.email }}</small>
+          </div>
+          <button type="button" class="chip chip--ghost" (click)="logout()">
+            {{ 'auth.logout' | t }}
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+
+  <app-toast-container />
+</div>

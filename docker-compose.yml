@@ -1,0 +1,18 @@
+services:
+  web:
+    image: rmbreeding-web:latest
+    build:
+      context: .
+    container_name: rmbreeding-web
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+    networks:
+      rmbreeding-net:
+        aliases:
+          - web
+
+networks:
+  rmbreeding-net:
+    external: true

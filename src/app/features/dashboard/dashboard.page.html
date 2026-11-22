@@ -1,0 +1,136 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <h1>{{ 'dashboard.title' | t }}</h1>
+      <p>{{ 'dashboard.subtitle' | t }}</p>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="skeleton-grid" aria-busy="true">
+      @for (item of [1, 2, 3, 4, 5]; track item) {
+        <div class="skeleton-card"></div>
+      }
+    </div>
+  } @else if (error(); as message) {
+    <article class="card state" role="alert">
+      <h2>{{ 'dashboard.errorTitle' | t }}</h2>
+      <p>{{ message }}</p>
+      <button class="btn btn--primary" type="button" (click)="load()">
+        {{ 'common.retry' | t }}
+      </button>
+    </article>
+  } @else if (summary(); as data) {
+    <div class="kpi-grid">
+      <article class="card kpi">
+        <span class="kpi__label">{{ 'dashboard.kpi.herdSize' | t }}</span>
+        <strong class="kpi__value">{{ data.herdSize }}</strong>
+      </article>
+      <article class="card kpi">
+        <span class="kpi__label">{{ 'dashboard.kpi.births' | t }}</span>
+        <strong class="kpi__value">{{ data.birthsThisMonth }}</strong>
+      </article>
+      <article class="card kpi">
+        <span class="kpi__label">{{ 'dashboard.kpi.adg' | t }}</span>
+        <strong class="kpi__value">
+          {{ formatDecimal(data.averageDailyGain) }}
+          @if (data.averageDailyGain !== null) {
+            <small>kg/j</small>
+          }
+        </strong>
+      </article>
+      <article class="card kpi">
+        <span class="kpi__label">{{ 'dashboard.kpi.margin' | t }}</span>
+        <strong class="kpi__value">
+          {{ formatDecimal(data.grossMargin) }}
+          @if (data.grossMargin !== null) {
+            <small>XOF</small>
+          }
+        </strong>
+      </article>
+      <article class="card kpi">
+        <span class="kpi__label">{{ 'dashboard.kpi.alerts' | t }}</span>
+        <strong class="kpi__value">{{ data.openAlerts }}</strong>
+      </article>
+    </div>
+
+    <div class="panels">
+      <article class="card panel">
+        <header class="panel__header">
+          <h2>{{ 'dashboard.criticalAlerts' | t }}</h2>
+          <a routerLink="/app/alerts" class="link">{{ 'dashboard.viewAll' | t }} →</a>
+        </header>
+        @if (data.criticalAlerts.length === 0) {
+          <p class="empty">{{ 'dashboard.noCriticalAlerts' | t }}</p>
+        } @else {
+          <ul class="list">
+            @for (alert of data.criticalAlerts.slice(0, 3); track alert.id) {
+              <li [class]="severityClass(alert)">
+                <span class="list__dot"></span>
+                <div class="list__body">
+                  <strong>{{ alert.title }}</strong>
+                  <small>{{ alert.message }}</small>
+                  @if (alert.dueDate) {
+                    <small
+                      >{{ 'dashboard.dueDate' | t }} :
+                      {{ alert.dueDate | date: 'dd/MM/yyyy' }}</small
+                    >
+                  }
+                </div>
+                <span class="badge">{{ priorityLabel(alert.priority) }}</span>
+              </li>
+            }
+          </ul>
+        }
+      </article>
+
+      <article class="card panel">
+        <header class="panel__header">
+          <h2>{{ 'dashboard.chart.title' | t }}</h2>
+          <a routerLink="/app/reports" class="link">{{ 'dashboard.chart.details' | t }} →</a>
+        </header>
+        @if (!hasBirths()) {
+          <p class="empty">{{ 'dashboard.chart.empty' | t }}</p>
+        } @else {
+          <div
+            class="chart"
+            role="img"
+            [attr.aria-label]="'dashboard.chart.title' | t"
+            data-testid="births-chart"
+          >
+            @for (point of births(); track trackPoint($index, point)) {
+              <div class="chart__column">
+                <span class="chart__value">{{ formatDecimal(point.value) }}</span>
+                <div class="chart__track">
+                  <div
+                    class="chart__bar"
+                    [style.height]="barHeight(point)"
+                    [attr.data-value]="point.value"
+                  ></div>
+                </div>
+                <span class="chart__label">{{ point.label }}</span>
+              </div>
+            }
+          </div>
+          <p class="chart__unit">{{ 'dashboard.chart.unit' | t }}</p>
+        }
+      </article>
+    </div>
+
+    <article class="card panel">
+      <header class="panel__header">
+        <h2>{{ 'dashboard.quickActions' | t }}</h2>
+      </header>
+      <div class="actions">
+        <a class="btn btn--primary" routerLink="/app/herd/new">{{
+          'dashboard.action.animal' | t
+        }}</a>
+        <a class="btn btn--ghost" routerLink="/app/lots/new">{{ 'dashboard.action.lot' | t }}</a>
+        <a class="btn btn--ghost" routerLink="/app/sales/new">{{ 'dashboard.action.sale' | t }}</a>
+        <a class="btn btn--ghost" routerLink="/app/production/weighings">
+          {{ 'dashboard.action.weighing' | t }}
+        </a>
+      </div>
+    </article>
+  }
+</section>

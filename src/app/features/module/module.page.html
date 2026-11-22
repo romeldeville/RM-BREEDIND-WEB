@@ -1,0 +1,32 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <h1>{{ titleKey | t }}</h1>
+      <p>{{ descKey | t }}</p>
+    </div>
+    <p-button label="Nouveau" [disabled]="true" />
+  </header>
+
+  <div class="module-layout">
+    <article class="card module-card">
+      <h2>Périmètre fonctionnel</h2>
+      <p class="muted">{{ 'module.placeholder' | t }}</p>
+      <ul class="module-list">
+        @for (bullet of bullets; track bullet) {
+          <li>{{ bullet }}</li>
+        }
+      </ul>
+    </article>
+
+    <article class="card module-card">
+      <h2>État de préparation</h2>
+      <ul class="checklist">
+        <li class="done">Schéma de base de données</li>
+        <li class="done">Contrat OpenAPI</li>
+        <li class="done">Navigation et garde d’accès</li>
+        <li>Écrans métier (phase suivante)</li>
+        <li>Tests end-to-end (phase suivante)</li>
+      </ul>
+    </article>
+  </div>
+</section>

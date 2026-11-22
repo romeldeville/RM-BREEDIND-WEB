@@ -1,0 +1,137 @@
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+
+.settings-card {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.settings-card h2 {
+  font-size: var(--font-size-lg);
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.segmented button {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: none;
+  background: var(--color-surface);
+  font: inherit;
+  cursor: pointer;
+}
+
+.segmented button.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.facts div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  border-bottom: 1px dashed var(--color-border);
+  padding-bottom: var(--space-2);
+}
+
+.facts dt {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.facts dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.field input {
+  min-height: var(--touch-target);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+}
+
+.field input:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-color: var(--color-info);
+}
+
+.field input.input-disabled {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.field-hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.alert {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.alert--success {
+  background: #ecfdf3;
+  color: var(--color-success);
+  border: 1px solid #bbf7d0;
+}
+
+.alert--danger {
+  background: #fef3f2;
+  color: var(--color-danger);
+  border: 1px solid #fecdca;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: var(--space-2);
+}

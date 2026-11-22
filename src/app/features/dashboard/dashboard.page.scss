@@ -1,0 +1,230 @@
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.kpi__label {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.kpi__value {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+}
+
+.kpi__value small {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  margin-left: 2px;
+  color: var(--color-text-muted);
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.panel {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.panel__header h2 {
+  font-size: var(--font-size-lg);
+}
+
+.link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.list__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-info);
+  flex-shrink: 0;
+}
+
+.list__item--important .list__dot {
+  background: var(--color-warning);
+}
+
+.list__item--critical .list__dot {
+  background: var(--color-danger);
+}
+
+.list__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.list__body strong,
+.list__body small {
+  overflow-wrap: anywhere;
+}
+
+.list__body small {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  min-height: 180px;
+}
+
+.chart__column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.chart__value {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.chart__track {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 130px;
+}
+
+.chart__bar {
+  width: 100%;
+  min-height: 2px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: var(--color-primary);
+  transition: height 200ms ease;
+}
+
+.chart__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.chart__unit {
+  margin-top: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.empty {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  padding: var(--space-4) 0;
+}
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-6);
+}
+
+.state p {
+  color: var(--color-text-muted);
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+.skeleton-card {
+  height: 112px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-card {
+    animation: none;
+  }
+
+  .chart__bar {
+    transition: none;
+  }
+}
