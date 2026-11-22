@@ -12,7 +12,13 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
 app.set('trust proxy', true);
 const angularApp = new AngularNodeAppEngine({
-  allowedHosts: ['localhost', '127.0.0.1', 'app.rmbreeding.local', 'app.rmbreeding.com'],
+  allowedHosts: [
+    'localhost',
+    '127.0.0.1',
+    '62.171.162.167',
+    'app.rmbreeding.local',
+    'app.rmbreeding.com',
+  ],
   trustProxyHeaders: true,
 });
 
