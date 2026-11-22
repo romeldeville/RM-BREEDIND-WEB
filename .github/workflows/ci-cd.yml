@@ -56,7 +56,18 @@ jobs:
           name: web-artifacts
           path: staging/
 
+      - name: Check if Deploy Key is configured
+        id: check_key
+        run: |
+          if [ -z "${{ secrets.SERVER_SSH_KEY }}" ]; then
+            echo "SSH Key secret SERVER_SSH_KEY is not configured yet in GitHub Secrets."
+            echo "has_key=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_key=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Copy files to VPS
+        if: steps.check_key.outputs.has_key == 'true'
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST || '62.171.162.167' }}
@@ -68,6 +79,7 @@ jobs:
           overwrite: true
 
       - name: Restart Web container on VPS
+        if: steps.check_key.outputs.has_key == 'true'
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SERVER_HOST || '62.171.162.167' }}
