@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 
 @Component({
   selector: 'app-module-page',
   standalone: true,
-  imports: [TranslatePipe, ButtonModule],
+  imports: [TranslatePipe],
   templateUrl: './module.page.html',
   styleUrl: './module.page.scss',
 })
