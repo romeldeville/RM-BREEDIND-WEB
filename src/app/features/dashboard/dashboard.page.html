@@ -92,25 +92,27 @@
         @if (!hasBirths()) {
           <p class="empty">{{ 'dashboard.chart.empty' | t }}</p>
         } @else {
-          <div
-            class="chart"
-            role="img"
-            [attr.aria-label]="'dashboard.chart.title' | t"
-            data-testid="births-chart"
-          >
-            @for (point of births(); track trackPoint($index, point)) {
-              <div class="chart__column">
-                <span class="chart__value">{{ formatDecimal(point.value) }}</span>
-                <div class="chart__track">
-                  <div
-                    class="chart__bar"
-                    [style.height]="barHeight(point)"
-                    [attr.data-value]="point.value"
-                  ></div>
+          <div class="chart-wrapper">
+            <div
+              class="chart"
+              role="img"
+              [attr.aria-label]="'dashboard.chart.title' | t"
+              data-testid="births-chart"
+            >
+              @for (point of births(); track trackPoint($index, point)) {
+                <div class="chart__column">
+                  <span class="chart__value">{{ formatDecimal(point.value) }}</span>
+                  <div class="chart__track">
+                    <div
+                      class="chart__bar"
+                      [style.height]="barHeight(point)"
+                      [attr.data-value]="point.value"
+                    ></div>
+                  </div>
+                  <span class="chart__label">{{ point.label }}</span>
                 </div>
-                <span class="chart__label">{{ point.label }}</span>
-              </div>
-            }
+              }
+            </div>
           </div>
           <p class="chart__unit">{{ 'dashboard.chart.unit' | t }}</p>
         }

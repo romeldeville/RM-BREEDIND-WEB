@@ -35,7 +35,7 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": ["localhost", "127.0.0.1", "app.rmbreeding.local", "app.rmbreeding.com"]
+              "allowedHosts": ["localhost", "127.0.0.1", "62.171.162.167", "app.rmbreeding.local", "app.rmbreeding.com"]
             },
             "ssr": {
               "entry": "src/server.ts"
@@ -51,8 +51,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "8kB",
+                  "maximumError": "16kB"
                 }
               ],
               "outputHashing": "all"

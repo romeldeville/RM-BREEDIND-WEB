@@ -11,8 +11,6 @@ import {
 } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeuix/themes/aura';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/auth/auth.interceptor';
 
@@ -28,15 +26,5 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideClientHydration(withEventReplay()),
-    providePrimeNG({
-      theme: {
-        preset: Aura,
-        options: {
-          darkModeSelector: '.app-dark',
-          cssLayer: false,
-        },
-      },
-      ripple: true,
-    }),
   ],
 };
